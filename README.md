@@ -1,2 +1,2 @@
-# monitor-macOS-
-Scripts that are used to monitor or search for specific info on macOS
+# monitor (macOS)
+This repository contains scripts that are used for situations that can be catagorized as "monitoring". (NOTE: Each folder contains an individual script/program)
