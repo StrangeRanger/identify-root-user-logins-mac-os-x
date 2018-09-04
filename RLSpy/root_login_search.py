@@ -38,7 +38,7 @@ def root_users():
                 conditions = (user != "root" and (fields[8] != "incorrect" if len(fields) >= 9 else None) and fields[-4] == "USER=root" and fields[-2] in ("COMMAND=/usr/bin/bash", "COMMAND=/usr/bin/sh", "COMMAND=/usr/bin/su"))
                 # unsuccessful
                 conditions2 = (user != "root" and (fields[8] == "incorrect" if len(fields) >= 9 else None) and fields[-4] == "USER=root" and fields[-2] in ("COMMAND=/usr/bin/bash", "COMMAND=/usr/bin/sh", "COMMAND=/usr/bin/su"))
-                # 
+                # `sudo su`... 
                 conditions3 =  fields[-3] == "USER=root" and fields[-1] in ("COMMAND=/usr/bin/bash", "COMMAND=/usr/bin/sh", "COMMAND=/usr/bin/su")
 
                 # "..."; identifies users who successfully became root using `sudo su`
