@@ -7,7 +7,8 @@ Security Features/Notes:
 - Any and all users who attempt to either log into the root account or switch users, and are unsuccessful, will be identified and marked down.
 
 Program Notes/Faults:
-- If a user, user1, became a different user on the system via `sudo su {username}`, and logged into the root account, he or she will not be flagged as the user who logged in as root. Instead, the user he or she changed to will take the blame. To make it easier to identify the user who really logged into the root account, the program will print out any and all users who use `sudo su` to change to another user's account.
+- If a user with sudo power creates a tmp user and switches to that user, or even an excisting user, any `sudo` or `su` commands executed will cause the switched user to be blamed instead of the actual person. Though the culprit must know the password of the user he/she is switching to to successfully execute any `sudo` or `su` commands. Since this program identifies individuals who use `sudo su`,
+in combination with this program and searching through logs, you will be able to find out who the culprit was.
 - Small error: if user inputs their sudo password correctly when executing `sudo su {username}`, but the username does not exist, they will still be marked as `{username} has switched users {X} time(s)`. A good method in making sure that the user did switch users is check the /var/log/auth.log under the date that the incident occured. Take a look at `root_login_check.odt` to know what to look for.
 
 Other Notes:
