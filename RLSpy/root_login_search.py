@@ -32,15 +32,15 @@ def root_users():
             if (date < start_date):
                 # too old for interest
                 continue 
-            # "user : TTY=tty/1 ; PWD=/home/user ; USER=root ; COMMAND=/bin/su"
+            # `sudo su <...>`
             if fields[4].startswith("sudo["):
                 user = fields[5]
                 # successful
-                conditions = user != "root" and (fields[8] != "incorrect" if len(fields) >= 9 else None) and fields[-4] == "USER=root" and fields[-2] in ("COMMAND=/usr/bin/bash", "COMMAND=/usr/bin/sh", "COMMAND=/usr/bin/su")
+                conditions = user != "root" and (fields[8] != "incorrect" if len(fields) >= 9 else None) and fields[-4] == "USER=root" and fields[-2] == "COMMAND=/usr/bin/su"
                 # unsuccessful
-                conditions2 = user != "root" and (fields[8] == "incorrect" if len(fields) >= 9 else None) and fields[-4] == "USER=root" and fields[-2] in ("COMMAND=/usr/bin/bash", "COMMAND=/usr/bin/sh", "COMMAND=/usr/bin/su")
+                conditions2 = user != "root" and (fields[8] == "incorrect" if len(fields) >= 9 else None) and fields[-4] == "USER=root" and fields[-2] == "COMMAND=/usr/bin/su"
                 # `sudo su`... 
-                conditions3 =  fields[-3] == "USER=root" and fields[-1] in ("COMMAND=/usr/bin/bash", "COMMAND=/usr/bin/sh", "COMMAND=/usr/bin/su")
+                conditions3 =  fields[-3] == "USER=root" and fields[-1] in ("COMMAND=/bin/bash", "COMMAND=/bin/sh", "COMMAND=/usr/bin/su")
 
                 # "..."; identifies users who successfully became root using `sudo su`
                 if user != "root" and (fields[8] != "incorrect" if len(fields) >= 9 else None) and conditions3:
@@ -61,6 +61,7 @@ def root_users():
                 elif conditions2 and fields[-1] != "root":
                     days[date]["/" + user] += 1 # A.2.
 
+            # `su <...>`
             if fields[4].startswith("su["):
                 # `su` or `su root`
                 conditions4 = fields[-3] == "root" and fields[-1].startswith("/dev/")
