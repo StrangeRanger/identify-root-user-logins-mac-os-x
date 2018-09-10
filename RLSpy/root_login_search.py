@@ -42,8 +42,11 @@ def root_users():
                 # `sudo su`... 
                 conditions3 =  fields[-3] == "USER=root" and fields[-1] in ("COMMAND=/bin/bash", "COMMAND=/bin/sh", "COMMAND=/usr/bin/su")
 
+                # "..."; identifies users who tried to use sudo but are not in the sudoers file
+                if user != "root" and fields[8] == "NOT" and fields[10] == "sudoers"and fields[16] == "USER=root" and fields[18].startswith("COMMAND=/"): 
+                    days[date]["~" + user] += 1 
                 # "..."; identifies users who successfully became root using `sudo su`
-                if user != "root" and (fields[8] != "incorrect" if len(fields) >= 9 else None) and conditions3:
+                elif user != "root" and (fields[8] != "incorrect" if len(fields) >= 9 else None) and conditions3:
                     days[date]["+" + user] += 1 # A.2. The defaultdict key becomes the date and its value, which is the counter, is the user, which gains a plus 1 in the counter
                 # "..."; identifies users who unsuccessfully became root using `sudo su`
                 elif user != "root" and (fields[8] == "incorrect" if len(fields) >= 9 else None) and conditions3:
@@ -95,14 +98,18 @@ def root_users():
         users = days[start_date]
         if users:
             for user, count in users.items(): # user, count is used because we're reading from a counter; which is a dict that maps username to count of occurrences
-                if "+" in user:
-                    print("   ", user, "became root", str(count), ("time" if count == 1 else "times"))
+                end_of_sentence = str(count) + (" time" if count == 1 else " times")
+
+                if "~" in user:
+                    print("   ", user, "tried to execute a command with root privilege", end_of_sentence, "but is not in the sudoers file") ### implement a way to identify what command was used
+                elif "+" in user:
+                    print("   ", user, "became root", end_of_sentence)
                 elif "-" in user:
-                    print("   ", user, "switched users", str(count), ("time" if count == 1 else "times"))
+                    print("   ", user, "switched users", end_of_sentence)
                 elif "*" in user:
-                    print("   ", user, "tried to become root", str(count), ("time" if count == 1 else "times"))
+                    print("   ", user, "tried to become root", end_of_sentence)
                 elif "/" in user:
-                    print("   ", user, "tried to switch users", str(count), ("time" if count == 1 else "times"))
+                    print("   ", user, "tried to switch users", end_of_sentence)
         else:
             print("    No one became root")
         start_date += timedelta(days=1)
