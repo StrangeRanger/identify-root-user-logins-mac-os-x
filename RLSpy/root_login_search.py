@@ -101,7 +101,7 @@ def root_users():
                 end_of_sentence = str(count) + (" time" if count == 1 else " times")
 
                 if "~" in user:
-                    print("   ", user, "tried to execute a command with root privilege", end_of_sentence, "but is not in the sudoers file") ### implement a way to identify what command was used
+                    print("   ", user, "is not in the sudoers file and tried to execute a command with root privilege", end_of_sentence) ### implement a way to identify what command was used
                 elif "+" in user:
                     print("   ", user, "became root", end_of_sentence)
                 elif "-" in user:
