@@ -5,6 +5,7 @@ Security Features/Notes:
 - If a user on the system created a temporary account in order to log in as root, then deletes the account after he or she is done with it, the temporary account will still show up in the scan results.
 - Any and all users who use `sudo su` to change to another user will be marked/identified. This makes it easier to identify a user who tries to blame a different user for logging in as root. (see Program Notes/Faults below)
 - Any and all users who attempt to either log into the root account or switch users, and are unsuccessful, will be identified and marked down.
+- Users who are not in the sudoers file and use `sudo {command}`, will be identified.
 
 Program Notes/Faults:
 - If a user with sudo power creates a tmp user and switches to that user, or even an excisting user, any `sudo` or `su` commands executed will cause the switched user to be blamed instead of the actual person. Though the culprit must know the password of the user he/she is switching to to successfully execute any `sudo` or `su` commands. Since this program identifies individuals who use `sudo su`,
