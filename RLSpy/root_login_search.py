@@ -43,7 +43,7 @@ def root_users():
                 conditions3 =  fields[-3] == "USER=root" and fields[-1] in ("COMMAND=/bin/bash", "COMMAND=/bin/sh", "COMMAND=/usr/bin/su")
 
                 # "..."; identifies users who tried to use sudo but are not in the sudoers file
-                if user != "root" and fields[8] == "NOT" and fields[10] == "sudoers"and fields[16] == "USER=root" and fields[18].startswith("COMMAND=/"): 
+                if user != "root" and fields[8] == "NOT" and fields[10] == "sudoers"and fields[16] == "USER=root" and fields[18].startswith("COMMAND="): 
                     days[date]["~" + user] += 1 
                 # "..."; identifies users who successfully became root using `sudo su`
                 elif user != "root" and (fields[8] != "incorrect" if len(fields) >= 9 else None) and conditions3:
