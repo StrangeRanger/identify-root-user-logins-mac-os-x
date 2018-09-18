@@ -13,9 +13,8 @@ in combination with this script and searching through logs, you will be able to 
 - Small error: if user inputs their sudo password correctly when executing `sudo su {username}`, but the username does not exist, they will still be marked as `{username} has switched users {X} time(s)`. A good method in making sure that the user did switch users is check the /var/log/auth.log under the date that the incident occured. Take a look at `root_login_check.odt` to know what to look for.
 
 Other Notes:
-- By default, the auth.log will be scanned up to 7 days worth of logs. If you wish to change the number of days, change teh value of N in the script.
+- By default, the auth.log will be scanned up to 7 days worth of logs. If you wish to change the number of days, change the value of N in the script.
 
-This script only works on macOS .
 Verisons of macOS that this script works on:
 - El Capitan: Works
 - High Sierra: DOES NOT WORK
