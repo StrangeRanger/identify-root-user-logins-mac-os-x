@@ -18,4 +18,4 @@ Other Notes:
 Verisons of macOS that this script works on:
 - El Capitan: Works
 - High Sierra: DOES NOT WORK
-- Mojave: Unkown 
+- Mojave: DOES NOT WORK 
