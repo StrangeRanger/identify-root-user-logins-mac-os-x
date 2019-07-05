@@ -1,4 +1,7 @@
-# What does it do
+# identify-root-user-logins-mac-os-x
+
+[![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)
+
 This script scans system.log in order to find out if a user(s) have logged in as root, and identify who they are.
 
 # Security Features/Notes:
